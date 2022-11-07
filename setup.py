@@ -9,11 +9,12 @@ os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 setup(
     name='django-admin-resumable-js',
     version='3.0',
-    packages=['admin_resumable'],
+    packages=['admin_async_upload'],
     include_package_data=True,
     package_data={
-        'admin_resumable': [
-            'templates/admin_resumable/file_input.html',
+        'admin_async_upload': [
+            'templates/admin_resumable/admin_file_input.html',
+            'templates/admin_resumable/user_file_input.html',
             'static/admin_resumable/js/resumable.js',
         ]
     },
@@ -21,8 +22,8 @@ setup(
     description='A Django app for the uploading of large files from the django admin site.',
     long_description=README,
     url='https://github.com/jonatron/django-admin-resumable-js',
-    author='Jonatron',
-    author_email='jon4tron@gmail.com',
+    author='Ian Sokolskyi',
+    author_email='iansokolskyi@gmail.com',
     classifiers=[
         'Environment :: Web Environment',
         'Framework :: Django',
@@ -34,4 +35,10 @@ setup(
         'Topic :: Internet :: WWW/HTTP',
         'Topic :: Internet :: WWW/HTTP :: Dynamic Content',
     ],
+    install_requires=[
+        'Django>=4.1',
+    ],
+    tests_require=[
+        'pytest-django',
+    ]
 )

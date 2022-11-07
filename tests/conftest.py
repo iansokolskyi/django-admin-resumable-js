@@ -64,7 +64,7 @@ def pytest_configure():
                 },
             },
         ],
-        MIDDLEWARE=(
+        MIDDLEWARE_CLASSES=(
             'django.middleware.common.CommonMiddleware',
             'django.contrib.sessions.middleware.SessionMiddleware',
             'django.middleware.csrf.CsrfViewMiddleware',
@@ -80,7 +80,7 @@ def pytest_configure():
             'django.contrib.messages',
             'django.contrib.staticfiles',
 
-            'admin_resumable',
+            'admin_async_upload',
             'tests',
         ),
         PASSWORD_HASHERS=(

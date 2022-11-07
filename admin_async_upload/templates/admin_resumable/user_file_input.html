@@ -1,3 +1,4 @@
+{% load i18n %}
 <script>
 (function($) {
     $(function() {
@@ -13,7 +14,7 @@
         }
         var r = new Resumable({
             target: '{% url 'admin_resumable' %}',
-            chunkSize: {{ chunkSize }},
+            chunkSize: {{ chunk_size }},
             query: {
                 csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
                 field_name: '{{ field_name }}',
@@ -22,12 +23,14 @@
         });
         r.assignBrowse($('#{{ id }}_input_file'));
         r.on('fileAdded', function(file) {
-            r.upload();
+            $("#{{ id }}_uploaded_status").html("{% trans 'Uploading' %} " + file.fileName);
             $("form").addClass("{{ name }}_disabled");
+            r.upload();
         });
         r.on('fileSuccess', function(file, message) {
             $('#{{ id }}').val(message);
-            $("#{{ id }}_uploaded_status").html(message + ' Uploaded');
+            $("#{{ id }}_uploaded_status").html("{% trans 'File uploaded' %}: " + file.fileName);
+            $("#{{ id }}_input_file").css("display", "none");
             $("form").removeClass("{{ name }}_disabled");
         });
         r.on('fileError', function(file, message) {
@@ -39,25 +42,14 @@
 
     });
 
-})(django.jQuery);
+})(typeof django !== "undefined" ? django.jQuery : jQuery);
 
 
 </script>
 <div id="container">
     <p class="file-upload">
         {% if value %}
-            Currently:
-            {% if file_url %}
-                <a id="{{ id }}_link" target="_new" href="{{ file_url }}">{{ file_url }}</a>
-                {% if show_thumb %}
-                    <img src="{{ file_url }}" style="width:250px;">
-                {% endif %}
-            {% else %}
-                {{ value }}
-            {% endif %}
-            {{ clear_checkbox }}
-            <br>
-            Change:
+            {% trans 'Change' %}:
         {% endif %}
 
         <span id="{{ id }}_uploaded_status"></span>
